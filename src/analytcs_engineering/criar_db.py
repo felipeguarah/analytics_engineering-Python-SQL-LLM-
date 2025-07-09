@@ -3,6 +3,19 @@
 # Import
 import psycopg2
 
+
+from dotenv import load_dotenv
+import os
+
+# Carrega as variáveis do arquivo .env
+load_dotenv()
+
+# Recupera o caminho do script SQL
+db_script_path = os.getenv("CRIAR_DB_PATH")
+
+
+
+
 # Função para executar script SQL
 def dsa_executa_script_sql(filename):
     
@@ -39,4 +52,4 @@ def dsa_executa_script_sql(filename):
         conn.close()
 
 # Executa o script SQL
-dsa_executa_script_sql('/Volumes/HD/DataScience_Academy/Cap12/Lab5-01-Database.sql')
+dsa_executa_script_sql(db_script_path)

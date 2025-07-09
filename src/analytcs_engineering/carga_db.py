@@ -5,6 +5,17 @@ import psycopg2
 import pandas as pd
 from sqlalchemy import create_engine
 
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+
+load_dotenv()
+
+base_path = Path(os.getenv("BASE_PATH"))
+caminho_csv = base_path / "dsa_clientes.csv"
+
+
+
 # Cria o motor de conexão (ATENÇÃO COM A STRING DE CONEXÃO ABAIXO!!!!!!)
 engine = create_engine('postgresql+psycopg2://dsa:dsa1010@localhost:5959/dsadb')
 
@@ -27,8 +38,11 @@ def dsa_carrega_dados(csv_file, table_name, schema):
         print(f"Erro ao inserir dados do arquivo {csv_file} na tabela {schema}.{table_name}: {e}")
 
 # Carregamento dos dados no schema 'lab5'
-dsa_carrega_dados('/Volumes/HD/DataScience_Academy/Cap12/dsa_clientes.csv', 'clientes', 'lab5')
-dsa_carrega_dados('/Volumes/HD/DataScience_Academy/Cap12/dsa_produtos.csv', 'produtos', 'lab5')
-dsa_carrega_dados('/Volumes/HD/DataScience_Academy/Cap12/dsa_compras.csv', 'compras', 'lab5')
+dsa_carrega_dados(caminho_csv, 'clientes', 'lab5')
+dsa_carrega_dados(caminho_csv, 'produtos', 'lab5')
+dsa_carrega_dados(caminho_csv, 'compras', 'lab5')
+#dsa_carrega_dados('/Volumes/HD/DataScience_Academy/Cap12/dsa_clientes.csv', 'clientes', 'lab5')
+#dsa_carrega_dados('/Volumes/HD/DataScience_Academy/Cap12/dsa_produtos.csv', 'produtos', 'lab5')
+#dsa_carrega_dados('/Volumes/HD/DataScience_Academy/Cap12/dsa_compras.csv', 'compras', 'lab5')
 
 print("\nCarga Executada com Sucesso! Use o pgAdmin Para Checar os Dados Se Desejar!\n")

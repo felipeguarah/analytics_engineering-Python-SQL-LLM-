@@ -3,6 +3,18 @@
 # Import
 import psycopg2
 
+
+from dotenv import load_dotenv
+import os
+
+# Carrega as variáveis do arquivo .env
+load_dotenv()
+
+# Recupera o caminho do script SQL
+sql_script_path = os.getenv("SQL_SCRIPT_PATH")
+
+
+
 def dsa_executa_script_sql(filename):
     
     # Conecta ao banco de dados PostgreSQL com as credenciais fornecidas
@@ -52,4 +64,5 @@ def dsa_executa_script_sql(filename):
         conn.close()
 
 # Executa o script SQL
-dsa_executa_script_sql('/Volumes/HD/DataScience_Academy/Cap12/Lab5-04-Consulta.sql')
+dsa_executa_script_sql(sql_script_path)
+#dsa_executa_script_sql('/Volumes/HD/DataScience_Academy/Cap12/Lab5-04-Consulta.sql')

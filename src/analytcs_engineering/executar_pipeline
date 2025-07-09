@@ -1,0 +1,41 @@
+# Python - Executa o Pipeline
+
+# Imports
+import subprocess
+import sys
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+
+# Corrigido: todos os caminhos como Path e filtrando os que são válidos
+script_paths = [Path(p) for p in [
+    os.getenv("CRIAR_DB_PATH"),
+    os.getenv("CARGA_DB_PATH"),
+    os.getenv("CONSULTAR_DB_PATH"),
+    os.getenv("EXTRACAO_LLM_PATH")
+] if p]
+
+# Função de execução com tratamento robusto
+def dsa_run_pipeline(script_path: Path):
+    try:
+        result = subprocess.run([sys.executable, str(script_path)], check=True, capture_output=True, text=True)
+        print(f"\n✅ Script {script_path.name} executado com sucesso.")
+        print("\n📤 Saída:\n", result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"\n❌ Erro ao executar o script {script_path.name}.")
+        print("\nErro:\n", e.stderr)
+
+# Execução dos scripts
+print("\n🚀 Iniciando pipeline...\n")
+for script in script_paths:
+    dsa_run_pipeline(script)
+
+print("\n🏁 Pipeline executado com sucesso!\n")
+
+
+
+
+
+
+
